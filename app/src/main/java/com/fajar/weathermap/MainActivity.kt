@@ -2,10 +2,41 @@ package com.fajar.weathermap
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.viewpager2.widget.ViewPager2
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.fajar.weathermap.data.adapter.SectionPagerAdapter
+import com.fajar.weathermap.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity:AppCompatActivity(R.layout.activity_main) {
+
+    private val binding: ActivityMainBinding by viewBinding()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+
+        val viewPager: ViewPager2 = binding.viewPager
+
+
+        val tabLayout: TabLayout = binding.tabs
+
+
+        val sectionPagerAdapter = SectionPagerAdapter(this)
+        viewPager.adapter = sectionPagerAdapter
+
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "Current"
+                1 -> tab.text = "Delhi"
+                2 -> tab.text = "Melbourne"
+                3 -> tab.text = "Mumbai"
+                4 -> tab.text = "New York"
+                5 -> tab.text = "Singapore"
+                6 -> tab.text = "Sydney"
+            }
+        }.attach()
     }
 }

@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Clear" />
+            tools:text="--" />
 
         <TextView
             android:id="@+id/tvDescription"
@@ -36,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvMain"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Clear Sky" />
+            tools:text="--" />
 
         <ImageView
             android:id="@id/imgWeather"

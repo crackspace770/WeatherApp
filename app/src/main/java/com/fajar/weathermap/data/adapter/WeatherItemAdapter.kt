@@ -47,6 +47,9 @@ class WeatherItemAdapter : RecyclerView.Adapter<WeatherItemAdapter.ListViewHolde
             "Drizzle" -> R.drawable.ic_rainy
             "Haze" -> R.drawable.haze
             "Rain" -> R.drawable.ic_rainy
+            "Smoke" -> R.drawable.haze
+            "Mist" -> R.drawable.mist
+            "Snow" -> R.drawable.snow
             else -> R.drawable.ic_block // Set a default icon or handle other conditions
         }
     }

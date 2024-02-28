@@ -1,7 +1,8 @@
-package com.fajar.weathermap.ui
+package com.fajar.weathermap.ui.current
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -16,7 +17,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
+import com.fajar.weathermap.data.utils.WeatherViewModelFactory
 import com.fajar.weathermap.databinding.ActivityWeatherBinding
+import com.fajar.weathermap.ui.current.WeatherViewModel
 
 class WeatherActivity : AppCompatActivity(), LocationListener {
 
@@ -31,11 +34,11 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
+        viewModel = ViewModelProvider(this, WeatherViewModelFactory(this))[WeatherViewModel::class.java]
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
-        // Request location updates
+
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -80,7 +83,6 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
                 window.statusBarColor = getBackgroundColor(weather.weather[0].main)
 
 
-
                 if (weather != null) {
                     weatherAdapter.differ.submitList(weather.weather)
                 }
@@ -96,7 +98,6 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
         }
 
         setupRvWeather()
-
     }
 
     private fun getBackgroundColor(weatherCondition: String): Int {
@@ -106,6 +107,9 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
             "Drizzle" -> ContextCompat.getColor(this, R.color.blue)
             "Haze" -> ContextCompat.getColor(this, R.color.gray)
             "Rain" -> ContextCompat.getColor(this, R.color.blue)
+            "Smoke" -> ContextCompat.getColor(this, R.color.gray)
+            "Mist" -> ContextCompat.getColor(this, R.color.gray)
+            "Snow" -> ContextCompat.getColor(this, R.color.grayish_blue)
             else -> ContextCompat.getColor(this, android.R.color.white) // Default color
         }
     }
@@ -164,9 +168,12 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
         }
     }
 
+
+
     companion object {
-        private const val LOCATION_PERMISSION_CODE = 1
-        private const val MIN_TIME_BW_UPDATES: Long = 5000 // 5 seconds
-        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 5f // 5 meters
+        const val LOCATION_PERMISSION_CODE = 1
+        const val MIN_TIME_BW_UPDATES: Long = 5000 // 5 seconds
+        const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 5f // 5 meters
+
     }
 }
