@@ -24,6 +24,12 @@ class WeatherItemAdapter : RecyclerView.Adapter<WeatherItemAdapter.ListViewHolde
             with(binding) {
                 tvMain.text = data.main
                 tvDescription.text = data.description
+
+
+                // Set image based on weather condition
+                imgWeather.setImageResource(getWeatherIcon(data.main))
+
+
             }
         }
 
@@ -33,6 +39,18 @@ class WeatherItemAdapter : RecyclerView.Adapter<WeatherItemAdapter.ListViewHolde
             }
         }
     }
+
+    private fun getWeatherIcon(weatherCondition: String): Int {
+        return when (weatherCondition) {
+            "Clear" -> R.drawable.ic_sunny
+            "Clouds" -> R.drawable.ic_cloud
+            "Drizzle" -> R.drawable.ic_rainy
+            "Haze" -> R.drawable.haze
+            "Rain" -> R.drawable.ic_rainy
+            else -> R.drawable.ic_block // Set a default icon or handle other conditions
+        }
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false))

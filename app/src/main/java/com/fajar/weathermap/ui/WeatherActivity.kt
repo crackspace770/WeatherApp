@@ -1,6 +1,7 @@
 package com.fajar.weathermap.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
 import com.fajar.weathermap.databinding.ActivityWeatherBinding
 
@@ -23,6 +25,7 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
     private val weatherAdapter by lazy {WeatherItemAdapter()}
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
@@ -54,9 +57,29 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
 
         viewModel.weatherData.observe(this) { weather ->
 
+            val temperature = weather.main.temp.toInt().div(10)
+            val feelLike = weather.main.feelsLike.toInt().div(10)
+            val tempMax = weather.main.tempMax.toInt().div(10)
+            val tempMin = weather.main.tempMin.toInt().div(10)
+            val visibility = weather.visibility.toInt().div(100)
+
             binding.apply {
-                tvBase.text = weather.main.temp.toString()
-                tvName.text = weather.name
+                tvMainTemp.text = "${temperature}°C"
+                tvName.text = "${weather.name}, ${weather.sys.country}"
+                tvTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
+                tvTempMaxMin.text = "${tempMax}° | ${tempMin}°"
+                tvHumidity.text = "${weather.main.humidity}%"
+                tvPressure.text = "${weather.main.pressure} mBar"
+                tvWind.text = "${weather.wind.speed} mph"
+                tvVisibility.text = "${visibility}%"
+                tvRainChance.text = "${weather.clouds.all}%"
+
+
+                backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
+
+                window.statusBarColor = getBackgroundColor(weather.weather[0].main)
+
+
 
                 if (weather != null) {
                     weatherAdapter.differ.submitList(weather.weather)
@@ -74,6 +97,17 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
 
         setupRvWeather()
 
+    }
+
+    private fun getBackgroundColor(weatherCondition: String): Int {
+        return when (weatherCondition) {
+            "Clear" -> ContextCompat.getColor(this, R.color.yellow_sun)
+            "Clouds" -> ContextCompat.getColor(this, R.color.grayish_blue)
+            "Drizzle" -> ContextCompat.getColor(this, R.color.blue)
+            "Haze" -> ContextCompat.getColor(this, R.color.gray)
+            "Rain" -> ContextCompat.getColor(this, R.color.blue)
+            else -> ContextCompat.getColor(this, android.R.color.white) // Default color
+        }
     }
 
     private fun setupRvWeather() {
