@@ -1,5 +1,7 @@
 ## Weather App 
-This is a  weather App to display the current weather based on your current location based on latitude and longitude
+This is a  weather App to display the current weather based on your current location based on latitude and longitude.
+
+In case on next application startup or in no internet case saved data is showed first fetched.
 
 APK : [APK](https://drive.google.com/file/d/1mrQaR9eqpQge0WETMQ-JN-hmMhQp1vXw/view?usp=sharing)
 
