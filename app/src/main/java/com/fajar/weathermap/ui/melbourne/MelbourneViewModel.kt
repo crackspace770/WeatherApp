@@ -8,9 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fajar.weathermap.data.network.ApiConfig
 import com.fajar.weathermap.data.response.WeatherResponse
-import com.fajar.weathermap.data.utils.Constant
 import com.fajar.weathermap.data.utils.Constant.Companion.API_KEY
-import com.fajar.weathermap.ui.mumbai.MumbaiViewModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,13 +44,16 @@ class MelbourneViewModel(private val context: Context) : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _weatherData.value = response.body()
+                    saveWeatherData(response.body())
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
+                    loadWeatherData()
                 }
             }
 
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
                 _isLoading.value = false
+                loadWeatherData()
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
