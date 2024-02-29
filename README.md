@@ -3,6 +3,8 @@ This is a  weather App to display the current weather based on your current loca
 
 In case on next application startup or in no internet case saved data is showed first fetched.
 
+It took some seconds to load your current data location
+
 APK : [APK](https://drive.google.com/file/d/10EYcEtzbZHqBFckvqjQO5Lsd0gj0ILC6/view?usp=sharing)
 
 ## Screenshot
