@@ -13,19 +13,18 @@ import com.fajar.weathermap.ui.sydney.SydneyWeatherFragment
 
 class SectionPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
-        return 7
+        return 6
     }
 
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
-            0 -> fragment = WeatherFragment()
-            1 -> fragment = DelhiWeatherFragment()
-            2 -> fragment = MelbourneWeatherFragment()
-            3 -> fragment = MumbaiWeatherFragment()
-            4 -> fragment = WeatherNYFragment()
-            5 -> fragment = SingaporeWeatherFragment()
-            6 -> fragment = SydneyWeatherFragment()
+            0 -> fragment = DelhiWeatherFragment()
+            1 -> fragment = MelbourneWeatherFragment()
+            2 -> fragment = MumbaiWeatherFragment()
+            3 -> fragment = WeatherNYFragment()
+            4 -> fragment = SingaporeWeatherFragment()
+            5 -> fragment = SydneyWeatherFragment()
 
         }
         return fragment as Fragment

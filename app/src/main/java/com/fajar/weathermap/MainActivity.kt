@@ -29,13 +29,13 @@ class MainActivity:AppCompatActivity(R.layout.activity_main) {
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Current"
-                1 -> tab.text = "Delhi"
-                2 -> tab.text = "Melbourne"
-                3 -> tab.text = "Mumbai"
-                4 -> tab.text = "New York"
-                5 -> tab.text = "Singapore"
-                6 -> tab.text = "Sydney"
+
+                0 -> tab.text = "Delhi"
+                1 -> tab.text = "Melbourne"
+                2 -> tab.text = "Mumbai"
+                3 -> tab.text = "New York"
+                4 -> tab.text = "Singapore"
+                5 -> tab.text = "Sydney"
             }
         }.attach()
     }

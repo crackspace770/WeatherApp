@@ -8,7 +8,7 @@
     >
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvMumbaiName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -19,10 +19,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTemp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMumbaiTemp" />
 
     <TextView
-        android:id="@+id/tvMainTemp"
+        android:id="@+id/tvMumbaiMainTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -36,18 +36,18 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvWeather"
+        android:id="@+id/rvMumbaiWeather"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvMumbaiName"
         tools:listitem="@layout/weather_item" />
 
     <TextView
-        android:id="@+id/tvTemp"
+        android:id="@+id/tvMumbaiTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -56,7 +56,7 @@
         android:text="--°C/feels like --°C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMainTemp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMumbaiMainTemp" />
 
     <androidx.cardview.widget.CardView
         android:id="@id/info"
@@ -66,7 +66,7 @@
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvWeather">
+        app:layout_constraintTop_toBottomOf="@+id/rvMumbaiWeather">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                 app:srcCompat="@drawable/ic_temperature" />
 
             <TextView
-                android:id="@+id/tvTempMaxMin"
+                android:id="@+id/tvMumbaiTempMaxMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -117,7 +117,7 @@
                 app:srcCompat="@drawable/ic_pressure" />
 
             <TextView
-                android:id="@+id/tvHumidity"
+                android:id="@+id/tvMumbaiHumidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -129,7 +129,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <TextView
-                android:id="@+id/tvPressure"
+                android:id="@+id/tvMumbaiPressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="58dp"
@@ -151,7 +151,7 @@
                 app:srcCompat="@drawable/wind" />
 
             <TextView
-                android:id="@+id/tvWind"
+                android:id="@+id/tvMumbaiWind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="93dp"
@@ -173,7 +173,7 @@
                 app:srcCompat="@drawable/baseline_remove_red_eye_24" />
 
             <TextView
-                android:id="@+id/tvVisibility"
+                android:id="@+id/tvMumbaiVisibility"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -207,7 +207,7 @@
                 app:srcCompat="@drawable/ic_umbrella" />
 
             <TextView
-                android:id="@+id/tvRainChance"
+                android:id="@+id/tvMumbaiRainChance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="65dp"
@@ -226,7 +226,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Min | Max"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/tvTempMaxMin" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMumbaiTempMaxMin" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -236,7 +236,7 @@
                 android:layout_marginEnd="39dp"
                 android:text="Wind Speed"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvWind" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMumbaiWind" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -246,7 +246,7 @@
                 android:layout_marginEnd="58dp"
                 android:text="Pressure"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPressure" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMumbaiPressure" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -256,7 +256,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Humidity"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/tvHumidity" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMumbaiHumidity" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -266,7 +266,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Visibility"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/tvVisibility" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMumbaiVisibility" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -276,7 +276,7 @@
                 android:layout_marginEnd="70dp"
                 android:text="Chance"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRainChance" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMumbaiRainChance" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

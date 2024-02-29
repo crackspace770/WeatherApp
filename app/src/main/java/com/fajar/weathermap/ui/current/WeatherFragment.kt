@@ -14,10 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -83,15 +81,15 @@ class WeatherFragment: Fragment(), LocationListener {
             val visibility = weather.visibility.toInt().div(100)
 
             binding.apply {
-                tvMainTemp.text = "${temperature}°C"
-                tvName.text = "${weather.name}, ${weather.sys.country}"
-                tvTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
-                tvTempMaxMin.text = "${tempMax}° | ${tempMin}°"
-                tvHumidity.text = "${weather.main.humidity}%"
-                tvPressure.text = "${weather.main.pressure} mBar"
-                tvWind.text = "${weather.wind.speed} mph"
-                tvVisibility.text = "${visibility}%"
-                tvRainChance.text = "${weather.clouds.all}%"
+                tvWeatherMainTemp.text = "${temperature}°C"
+                tvWeatherName.text = "${weather.name}, ${weather.sys.country}"
+                tvWeatherTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
+                tvWeatherTempMaxMin.text = "${tempMax}° | ${tempMin}°"
+                tvWeatherHumidity.text = "${weather.main.humidity}%"
+                tvWeatherPressure.text = "${weather.main.pressure} mBar"
+                tvWeatherWind.text = "${weather.wind.speed} mph"
+                tvWeatherVisibility.text = "${visibility}%"
+                tvWeatherRainChance.text = "${weather.clouds.all}%"
 
 
                 backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
@@ -110,14 +108,18 @@ class WeatherFragment: Fragment(), LocationListener {
                     weatherAdapter.differ.submitList(weather.weather)
                 }
 
-                progressBar.visibility = View.GONE
+
             }
 
 
         }
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.progressBar.visibility = View.VISIBLE
+        viewModel.isLoading.observe(requireActivity()) { isLoading->
+            if (isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
         }
 
         setupRvWeather()
@@ -181,28 +183,21 @@ class WeatherFragment: Fragment(), LocationListener {
                 if (ActivityCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    ) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
+                    ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return
+                    locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                        this
+                    )
+                } else {
+                    // Permission denied
+                    Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
                 }
-                locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                    this
-                )
-            } else {
-                Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -211,8 +206,8 @@ class WeatherFragment: Fragment(), LocationListener {
 
     companion object {
         private const val LOCATION_PERMISSION_CODE = 1
-        private const val MIN_TIME_BW_UPDATES: Long = 5000 // 5 seconds
-        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 5f // 5 meters
+        private const val MIN_TIME_BW_UPDATES: Long = 2000// 2 seconds
+        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 2f // 2 meters
 
     }
 }

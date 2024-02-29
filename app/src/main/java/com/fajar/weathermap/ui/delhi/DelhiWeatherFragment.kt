@@ -1,20 +1,13 @@
 package com.fajar.weathermap.ui.delhi
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,16 +16,12 @@ import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
 import com.fajar.weathermap.data.utils.WeatherViewModelFactory
 import com.fajar.weathermap.databinding.FragmentDelhiBinding
-import com.fajar.weathermap.databinding.FragmentNyBinding
-import com.fajar.weathermap.ui.current.WeatherActivity
-import com.fajar.weathermap.ui.newyork.WeatherNYViewModel
 import com.google.android.material.tabs.TabLayout
 
 class DelhiWeatherFragment: Fragment() {
 
     private lateinit var binding: FragmentDelhiBinding
     private lateinit var viewModel: DelhiViewModel
-    private lateinit var locationManager: LocationManager
     private val weatherAdapter by lazy { WeatherItemAdapter() }
     private lateinit var fragmentContext: Context
 
@@ -62,15 +51,15 @@ class DelhiWeatherFragment: Fragment() {
             val visibility = weather.visibility.toInt().div(100)
 
             binding.apply {
-                tvMainTemp.text = "${temperature}°C"
-                tvName.text = "${weather.name}, ${weather.sys.country}"
-                tvTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
-                tvTempMaxMin.text = "${tempMax}° | ${tempMin}°"
-                tvHumidity.text = "${weather.main.humidity}%"
-                tvPressure.text = "${weather.main.pressure} mBar"
-                tvWind.text = "${weather.wind.speed} mph"
-                tvVisibility.text = "${visibility}%"
-                tvRainChance.text = "${weather.clouds.all}%"
+                tvDelhiMainTemp.text = "${temperature}°C"
+                tvDelhiName.text = "${weather.name}, ${weather.sys.country}"
+                tvDelhiTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
+                tvDelhiTempMaxMin.text = "${tempMax}° | ${tempMin}°"
+                tvDelhiHumidity.text = "${weather.main.humidity}%"
+                tvDelhiPressure.text = "${weather.main.pressure} mBar"
+                tvDelhiWind.text = "${weather.wind.speed} mph"
+                tvDelhiVisibility.text = "${visibility}%"
+                tvDelhiRainChance.text = "${weather.clouds.all}%"
 
 
                 backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
@@ -132,7 +121,7 @@ class DelhiWeatherFragment: Fragment() {
     }
 
     private fun setupRvWeather() {
-        binding.rvWeather.apply {
+        binding.rvDelhiWeather.apply {
             adapter = weatherAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }

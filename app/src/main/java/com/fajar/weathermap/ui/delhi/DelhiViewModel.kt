@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import com.fajar.weathermap.data.network.ApiConfig
 import com.fajar.weathermap.data.response.WeatherResponse
 import com.fajar.weathermap.data.utils.Constant.Companion.API_KEY
-import com.fajar.weathermap.ui.current.WeatherViewModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

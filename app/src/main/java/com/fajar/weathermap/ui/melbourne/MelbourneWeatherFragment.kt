@@ -1,20 +1,13 @@
 package com.fajar.weathermap.ui.melbourne
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,17 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
 import com.fajar.weathermap.data.utils.WeatherViewModelFactory
-import com.fajar.weathermap.databinding.FragmentDelhiBinding
 import com.fajar.weathermap.databinding.FragmentMelbourneBinding
-import com.fajar.weathermap.ui.current.WeatherActivity
-import com.fajar.weathermap.ui.delhi.DelhiViewModel
 import com.google.android.material.tabs.TabLayout
 
 class MelbourneWeatherFragment: Fragment() {
 
     private lateinit var binding: FragmentMelbourneBinding
     private lateinit var viewModel: MelbourneViewModel
-    private lateinit var locationManager: LocationManager
     private val weatherAdapter by lazy { WeatherItemAdapter() }
     private lateinit var fragmentContext: Context
 
@@ -62,15 +51,15 @@ class MelbourneWeatherFragment: Fragment() {
             val visibility = weather.visibility.toInt().div(100)
 
             binding.apply {
-                tvMainTemp.text = "${temperature}°C"
-                tvName.text = "${weather.name}, ${weather.sys.country}"
-                tvTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
-                tvTempMaxMin.text = "${tempMax}° | ${tempMin}°"
-                tvHumidity.text = "${weather.main.humidity}%"
-                tvPressure.text = "${weather.main.pressure} mBar"
-                tvWind.text = "${weather.wind.speed} mph"
-                tvVisibility.text = "${visibility}%"
-                tvRainChance.text = "${weather.clouds.all}%"
+                tvMelbourneMainTemp.text = "${temperature}°C"
+                tvMelbourneName.text = "${weather.name}, ${weather.sys.country}"
+                tvMelbourneTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
+                tvMelbourneTempMaxMin.text = "${tempMax}° | ${tempMin}°"
+                tvMelbourneHumidity.text = "${weather.main.humidity}%"
+                tvMelbournePressure.text = "${weather.main.pressure} mBar"
+                tvMelbourneWind.text = "${weather.wind.speed} mph"
+                tvMelbourneVisibility.text = "${visibility}%"
+                tvMelbourneRainChance.text = "${weather.clouds.all}%"
 
 
                 backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
@@ -89,15 +78,19 @@ class MelbourneWeatherFragment: Fragment() {
                     weatherAdapter.differ.submitList(weather.weather)
                 }
 
-                progressBar.visibility = View.GONE
             }
 
 
         }
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.progressBar.visibility = View.VISIBLE
+        viewModel.isLoading.observe(requireActivity()) { isLoading->
+            if (isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
         }
+
 
         setupRvWeather()
 
@@ -132,7 +125,7 @@ class MelbourneWeatherFragment: Fragment() {
     }
 
     private fun setupRvWeather() {
-        binding.rvWeather.apply {
+        binding.rvMelbourneWeather.apply {
             adapter = weatherAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }

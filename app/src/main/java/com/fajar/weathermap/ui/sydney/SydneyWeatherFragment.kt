@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,15 +51,15 @@ class SydneyWeatherFragment:Fragment() {
             val visibility = weather.visibility.toInt().div(100)
 
             binding.apply {
-                tvMainTemp.text = "${temperature}°C"
-                tvName.text = "${weather.name}, ${weather.sys.country}"
-                tvTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
-                tvTempMaxMin.text = "${tempMax}° | ${tempMin}°"
-                tvHumidity.text = "${weather.main.humidity}%"
-                tvPressure.text = "${weather.main.pressure} mBar"
-                tvWind.text = "${weather.wind.speed} mph"
-                tvVisibility.text = "${visibility}%"
-                tvRainChance.text = "${weather.clouds.all}%"
+                tvSydneyMainTemp.text = "${temperature}°C"
+                tvSydneyName.text = "${weather.name}, ${weather.sys.country}"
+                tvSydneyTemp.text = "${temperature}°C/Feels like ${feelLike}°C"
+                tvSydneyTempMaxMin.text = "${tempMax}° | ${tempMin}°"
+                tvSydneyHumidity.text = "${weather.main.humidity}%"
+                tvSydneyPressure.text = "${weather.main.pressure} mBar"
+                tvSydneyWind.text = "${weather.wind.speed} mph"
+                tvSydneyVisibility.text = "${visibility}%"
+                tvSydneyRainChance.text = "${weather.clouds.all}%"
 
 
                 backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
@@ -80,15 +79,20 @@ class SydneyWeatherFragment:Fragment() {
                     weatherAdapter.differ.submitList(weather.weather)
                 }
 
-                progressBar.visibility = View.GONE
+
             }
 
 
         }
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.progressBar.visibility = View.VISIBLE
+        viewModel.isLoading.observe(requireActivity()) { isLoading->
+            if (isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
         }
+
 
         setupRvWeather()
 
@@ -109,7 +113,7 @@ class SydneyWeatherFragment:Fragment() {
     }
 
     private fun setupRvWeather() {
-        binding.rvWeather.apply {
+        binding.rvSydneyWeather.apply {
             adapter = weatherAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }

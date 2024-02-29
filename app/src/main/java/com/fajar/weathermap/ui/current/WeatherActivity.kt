@@ -3,6 +3,7 @@ package com.fajar.weathermap.ui.current
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -15,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fajar.weathermap.MainActivity
 import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
 import com.fajar.weathermap.data.utils.WeatherViewModelFactory
@@ -97,6 +99,11 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
             binding.progressBar.visibility = View.VISIBLE
         }
 
+        binding.tvOtherLocation.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         setupRvWeather()
     }
 
@@ -172,8 +179,8 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
 
     companion object {
         const val LOCATION_PERMISSION_CODE = 1
-        const val MIN_TIME_BW_UPDATES: Long = 5000 // 5 seconds
-        const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 5f // 5 meters
+        const val MIN_TIME_BW_UPDATES: Long = 2000 // 2 seconds
+        const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 2f // meters
 
     }
 }
