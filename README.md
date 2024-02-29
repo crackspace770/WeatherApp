@@ -7,7 +7,7 @@ It took some seconds to load your current data location
 
 APK : [APK](https://drive.google.com/file/d/10EYcEtzbZHqBFckvqjQO5Lsd0gj0ILC6/view?usp=sharing)
 
-<img src="https://github.com/crackspace770/WeatherApp/blob/master/ss/preview.gif" align="right" width="520"/>
+<img src="https://github.com/crackspace770/WeatherApp/blob/master/ss/preview.gif" align="center" width="520"/>
 
 ## Screenshot
 <table style="width:40%">
