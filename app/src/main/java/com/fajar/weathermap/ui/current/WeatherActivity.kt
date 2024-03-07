@@ -2,7 +2,6 @@ package com.fajar.weathermap.ui.current
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -39,6 +38,7 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
         viewModel = ViewModelProvider(this, WeatherViewModelFactory(this))[WeatherViewModel::class.java]
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
 
 
         if (ContextCompat.checkSelfPermission(

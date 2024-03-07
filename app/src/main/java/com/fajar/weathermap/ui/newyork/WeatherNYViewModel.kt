@@ -38,6 +38,7 @@ class WeatherNYViewModel(private val context: Context): ViewModel() {
     }
 
     fun fetchWeatherData(latitude: Double, longitude: Double) {
+        _isLoading.value = true
         val apiKey = API_KEY // Replace with your actual API key
         val client = ApiConfig.provideApiService().getWeather(latitude, longitude, apiKey)
         client.enqueue(object : Callback<WeatherResponse> {
