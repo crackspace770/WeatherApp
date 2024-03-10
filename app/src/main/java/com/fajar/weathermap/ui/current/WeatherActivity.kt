@@ -16,11 +16,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.weathermap.MainActivity
-import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
+import com.fajar.weathermap.data.utils.WeatherTypeUtils
 import com.fajar.weathermap.data.utils.WeatherViewModelFactory
 import com.fajar.weathermap.databinding.ActivityWeatherBinding
-import com.fajar.weathermap.ui.current.WeatherViewModel
+
 
 class WeatherActivity : AppCompatActivity(), LocationListener {
 
@@ -80,9 +80,9 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
                 tvRainChance.text = "${weather.clouds.all}%"
 
 
-                backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
+                backgroundMain.setBackgroundColor(ContextCompat.getColor(this@WeatherActivity, WeatherTypeUtils.getWeatherColor(weather.weather[0].main)))
 
-                window.statusBarColor = getBackgroundColor(weather.weather[0].main)
+                window.statusBarColor = ContextCompat.getColor(this@WeatherActivity, WeatherTypeUtils.getWeatherColor(weather.weather[0].main))
 
 
                 if (weather != null) {
@@ -107,19 +107,6 @@ class WeatherActivity : AppCompatActivity(), LocationListener {
         setupRvWeather()
     }
 
-    private fun getBackgroundColor(weatherCondition: String): Int {
-        return when (weatherCondition) {
-            "Clear" -> ContextCompat.getColor(this, R.color.yellow_sun)
-            "Clouds" -> ContextCompat.getColor(this, R.color.grayish_blue)
-            "Drizzle" -> ContextCompat.getColor(this, R.color.blue)
-            "Haze" -> ContextCompat.getColor(this, R.color.gray)
-            "Rain" -> ContextCompat.getColor(this, R.color.blue)
-            "Smoke" -> ContextCompat.getColor(this, R.color.gray)
-            "Mist" -> ContextCompat.getColor(this, R.color.gray)
-            "Snow" -> ContextCompat.getColor(this, R.color.grayish_blue)
-            else -> ContextCompat.getColor(this, android.R.color.white) // Default color
-        }
-    }
 
     private fun setupRvWeather() {
         binding.rvWeather.apply {

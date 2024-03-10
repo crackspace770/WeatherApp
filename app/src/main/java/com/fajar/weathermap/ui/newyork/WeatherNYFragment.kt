@@ -3,8 +3,6 @@ package com.fajar.weathermap.ui.newyork
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
+import com.fajar.weathermap.data.utils.WeatherTypeUtils
 import com.fajar.weathermap.data.utils.WeatherViewModelFactory
 import com.fajar.weathermap.databinding.FragmentNyBinding
 import com.google.android.material.tabs.TabLayout
@@ -63,14 +62,13 @@ class WeatherNYFragment: Fragment() {
                 tvNYRainChance.text = "${weather.clouds.all}%"
 
 
-                backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
-
-                activity?.window?.statusBarColor = getBackgroundColor(weather.weather[0].main)
+                backgroundMain.setBackgroundColor(ContextCompat.getColor(requireContext(), WeatherTypeUtils.getWeatherColor(weather.weather[0].main)))
+                activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), WeatherTypeUtils.getWeatherColor(weather.weather[0].main))
 
                 activity?.let { mainActivity ->
                     mainActivity.findViewById<TabLayout>(R.id.tabs)?.apply {
                         for (i in 0 until tabCount) {
-                            getTabAt(i)?.view?.background = getTabBackgroundColor(weather.weather[0].main)
+                            getTabAt(i)?.view?.background = ColorDrawable(ContextCompat.getColor(requireContext(), WeatherTypeUtils.getWeatherColor(weather.weather[0].main)))
                         }
                     }
                 }
@@ -98,33 +96,7 @@ class WeatherNYFragment: Fragment() {
 
     }
 
-    private fun getBackgroundColor(weatherCondition: String): Int {
-        return when (weatherCondition) {
-            "Clear" -> ContextCompat.getColor(requireContext(), R.color.yellow_sun)
-            "Clouds" -> ContextCompat.getColor(requireContext(), R.color.grayish_blue)
-            "Drizzle" -> ContextCompat.getColor(requireContext(), R.color.blue)
-            "Haze" -> ContextCompat.getColor(requireContext(), R.color.gray)
-            "Rain" -> ContextCompat.getColor(requireContext(), R.color.blue)
-            "Smoke" -> ContextCompat.getColor(requireContext(), R.color.gray)
-            "Mist" -> ContextCompat.getColor(requireContext(), R.color.gray)
-            "Snow" -> ContextCompat.getColor(requireContext(), R.color.grayish_blue)
-            else -> ContextCompat.getColor(requireContext(), android.R.color.white) // Default color
-        }
-    }
 
-    private fun getTabBackgroundColor(weatherCondition: String): Drawable {
-        return when (weatherCondition) {
-            "Clear" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.yellow_sun))
-            "Clouds" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.grayish_blue))
-            "Drizzle" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.blue))
-            "Haze" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.gray))
-            "Rain" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.blue))
-            "Smoke" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.gray))
-            "Mist" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.gray))
-            "Snow" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.grayish_blue))
-            else -> ColorDrawable(ContextCompat.getColor(requireContext(), android.R.color.white)) // Default color
-        }
-    }
 
     private fun setupRvWeather() {
         binding.rvNYWeather.apply {

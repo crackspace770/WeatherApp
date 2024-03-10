@@ -1,30 +1,21 @@
 package com.fajar.weathermap.ui.mumbai
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.weathermap.R
 import com.fajar.weathermap.data.adapter.WeatherItemAdapter
+import com.fajar.weathermap.data.utils.WeatherTypeUtils
 import com.fajar.weathermap.data.utils.WeatherViewModelFactory
 import com.fajar.weathermap.databinding.FragmentMumbaiBinding
-import com.fajar.weathermap.ui.current.WeatherActivity
-import com.fajar.weathermap.ui.delhi.DelhiViewModel
 import com.google.android.material.tabs.TabLayout
 
 class MumbaiWeatherFragment: Fragment() {
@@ -71,14 +62,13 @@ class MumbaiWeatherFragment: Fragment() {
                 tvMumbaiRainChance.text = "${weather.clouds.all}%"
 
 
-                backgroundMain.setBackgroundColor(getBackgroundColor(weather.weather[0].main))
-
-                activity?.window?.statusBarColor = getBackgroundColor(weather.weather[0].main)
+                backgroundMain.setBackgroundColor(ContextCompat.getColor(requireContext(), WeatherTypeUtils.getWeatherColor(weather.weather[0].main)))
+                activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), WeatherTypeUtils.getWeatherColor(weather.weather[0].main))
 
                 activity?.let { mainActivity ->
                     mainActivity.findViewById<TabLayout>(R.id.tabs)?.apply {
                         for (i in 0 until tabCount) {
-                            getTabAt(i)?.view?.background = getTabBackgroundColor(weather.weather[0].main)
+                            getTabAt(i)?.view?.background = ColorDrawable(ContextCompat.getColor(requireContext(), WeatherTypeUtils.getWeatherColor(weather.weather[0].main)))
                         }
                     }
                 }
@@ -103,34 +93,6 @@ class MumbaiWeatherFragment: Fragment() {
 
         setupRvWeather()
 
-    }
-
-    private fun getBackgroundColor(weatherCondition: String): Int {
-        return when (weatherCondition) {
-            "Clear" -> ContextCompat.getColor(requireContext(), R.color.yellow_sun)
-            "Clouds" -> ContextCompat.getColor(requireContext(), R.color.grayish_blue)
-            "Drizzle" -> ContextCompat.getColor(requireContext(), R.color.blue)
-            "Haze" -> ContextCompat.getColor(requireContext(), R.color.gray)
-            "Rain" -> ContextCompat.getColor(requireContext(), R.color.blue)
-            "Smoke" -> ContextCompat.getColor(requireContext(), R.color.gray)
-            "Mist" -> ContextCompat.getColor(requireContext(), R.color.gray)
-            "Snow" -> ContextCompat.getColor(requireContext(), R.color.grayish_blue)
-            else -> ContextCompat.getColor(requireContext(), android.R.color.white) // Default color
-        }
-    }
-
-    private fun getTabBackgroundColor(weatherCondition: String): Drawable {
-        return when (weatherCondition) {
-            "Clear" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.yellow_sun))
-            "Clouds" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.grayish_blue))
-            "Drizzle" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.blue))
-            "Haze" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.gray))
-            "Rain" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.blue))
-            "Smoke" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.gray))
-            "Mist" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.gray))
-            "Snow" -> ColorDrawable(ContextCompat.getColor(requireContext(), R.color.grayish_blue))
-            else -> ColorDrawable(ContextCompat.getColor(requireContext(), android.R.color.white)) // Default color
-        }
     }
 
 
